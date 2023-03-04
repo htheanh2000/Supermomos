@@ -5,18 +5,18 @@ import Error from '../errorMessage';
 
 // Define interface for props
 interface FieldProps {
-    label: string;
+    label?: string;
     id?: string;
     name: string;
     type?: string;
     placeholder?: string;
+    className?: string;
 }
 
-const Field = ({ label, ...props } : FieldProps) => {
+const Field = ({ label,className, ...props } : FieldProps) => {
     const [field, meta] = useField(props);
     return (
-        <div className='mt-8'>
-            {/* <label htmlFor={props.id || props.name}>{label}</label> */}
+        <div className={`${className}`}>
             <Input label={label} {...field} {...props} />
             {(meta.touched && meta.error) ? <Error>{meta.error}</Error> : null}
         </div>

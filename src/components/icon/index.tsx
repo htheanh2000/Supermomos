@@ -1,7 +1,8 @@
+import Image from "next/image";
 import chevronDown from "icon/chevron-down.svg";
 import calendar from "icon/calendar.svg";
 import clock from "icon/clock.svg";
-import Image from "next/image";
+import location from "icon/location.svg";
 
 type Props = {
   color?: string; // default: black
@@ -16,6 +17,7 @@ export const icons = {
   'chevron-down': chevronDown,
   calendar: calendar,
   clock: clock,
+  location: location
 };
 
 const IconSize = {

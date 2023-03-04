@@ -1,32 +1,46 @@
-import { forwardRef, HTMLInputTypeAttribute, useImperativeHandle, useRef } from 'react'
+import {
+  forwardRef,
+  HTMLInputTypeAttribute,
+  useImperativeHandle,
+  useRef,
+} from "react";
 
 type Props = {
-  placeholder?: string
-  label?: string
-  className?: string
-  name?: string
-  onChange?:  any
-  type?: HTMLInputTypeAttribute
-  value?: string
+  placeholder?: string;
+  label?: string;
+  className?: string;
+  name?: string;
+  onChange?: any;
+  type?: HTMLInputTypeAttribute;
+  value?: string;
+};
+
+export interface InputRef extends HTMLInputElement {
+  getValue: () => string;
 }
 
-export interface InputRef extends  HTMLInputElement  {
-  getValue: () => string
-}
-
-const Input = forwardRef((props: Props, ref, ) => {
-  const { placeholder, label, className, onChange, name = '', type , value } = props
-  const inputRef = useRef<HTMLInputElement>(null)
+const Input = forwardRef((props: Props, ref) => {
+  const {
+    placeholder,
+    label,
+    className,
+    onChange,
+    name = "",
+    type,
+    value,
+  } = props;
+  const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => ({
     getValue: () => inputRef?.current?.value,
-  }))
+  }));
 
   return (
     <div className={`${className}`}>
-      <label htmlFor={label} className="lead">
+      {/* Current Desgin system don't include label */}
+      {/* <label htmlFor={label}>
         {label}
-      </label>
-      <div className="mt-4">
+      </label> */}
+
         <input
           onChange={onChange}
           type={type}
@@ -34,12 +48,11 @@ const Input = forwardRef((props: Props, ref, ) => {
           name={name}
           ref={inputRef}
           value={value}
-          className={`w-full px-4 py-3 cursor-pointer base-text text-black outline rounded  outline-1 outline-gray focus:outline-primary`}
+          className={`w-full px-4 cursor-pointer pl-1 text-heading-4 text-gray text-heading-6 rounded outline-0`}
           placeholder={placeholder}
         />
-      </div>
     </div>
-  )
-})
+  );
+});
 
-export default Input
+export default Input;
