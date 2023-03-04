@@ -3,21 +3,24 @@ import chevronDown from "icon/chevron-down.svg";
 import calendar from "icon/calendar.svg";
 import clock from "icon/clock.svg";
 import location from "icon/location.svg";
+import close from "icon/close.svg";
 
 type Props = {
   color?: string; // default: black
   name: IconName;
   className?: string;
   size?: keyof typeof IconSize;
+  onClick?: () => void;
 };
 
 type IconName = keyof typeof icons;
 
 export const icons = {
-  'chevron-down': chevronDown,
+  "chevron-down": chevronDown,
   calendar: calendar,
   clock: clock,
-  location: location
+  location: location,
+  close: close,
 };
 
 const IconSize = {
@@ -29,11 +32,12 @@ const IconSize = {
 };
 
 const Icon = (props: Props) => {
-  const { name, size = "sm", className } = props;
+  const { name, size = "sm", className, onClick } = props;
 
   return (
     <div>
       <Image
+        onClick={onClick}
         src={icons[name]}
         className={`cursor-pointer ${className}`}
         alt={`Icon ${name}`}
