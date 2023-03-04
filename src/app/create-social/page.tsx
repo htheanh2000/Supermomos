@@ -20,6 +20,9 @@ const CreateSocialPage = () => {
                         showTimeSelect showTimeSelectOnly placeholderText="Time" className="max-w-[11rem] w-44 ml-4"/>
                 </div>
            </div>
+           <div>
+           <Icon size='xs' name="calendar"/>
+           </div>
         </Container>
     )
 }
