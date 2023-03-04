@@ -5,7 +5,21 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    screens: {
+      mobile: '425px',
+      // => @media (min-width: 640px) { ... }
+
+      tablet: '768px',
+      // => @media (min-width: 640px) { ... }
+
+      desktop: '1024px',
+      // => @media (min-width: 1024px) { ... }
+    },
+    extend: {
+      colors: {
+        gray: '#333333',
+      },
+    },
   },
   plugins: [],
 }
