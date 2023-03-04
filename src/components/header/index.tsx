@@ -3,6 +3,7 @@ import NAVLINKS from "@/constant/navlink"
 import ImgLogo from "image/logo.png"
 import Image from "next/image"
 import Link from "next/link"
+import Icon from "../icon"
 
 const Header = () => {
     return ( 
@@ -12,8 +13,9 @@ const Header = () => {
             <ul className="flex">
                 {NAVLINKS.map(link =>
                    <li>
-                        <Link className="text-md py-2 px-6" key={link.url} href={link.url}>
+                        <Link className="text-md py-2 px-6 flex justify-center items-center" key={link.url} href={link.url}>
                             {link.name}
+                            {link.subLinks ? <Icon className="ml-2" size="xxs" name="chevron-down"/> : null}
                         </Link>
                    </li> 
                 )}
