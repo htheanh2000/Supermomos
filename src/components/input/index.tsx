@@ -21,13 +21,8 @@ export interface InputRef extends HTMLInputElement {
 
 const Input = forwardRef((props: Props, ref) => {
   const {
-    placeholder,
-    label,
     className,
     onChange,
-    name = "",
-    type,
-    value,
   } = props;
   const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => ({
@@ -43,13 +38,8 @@ const Input = forwardRef((props: Props, ref) => {
 
         <input
           onChange={onChange}
-          type={type}
-          id={label}
-          name={name}
-          ref={inputRef}
-          value={value}
+          {...props}
           className={`w-full px-4 cursor-pointer pl-1 text-heading-4 text-gray text-heading-6 rounded outline-0`}
-          placeholder={placeholder}
         />
     </div>
   );
