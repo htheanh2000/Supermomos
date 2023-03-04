@@ -12,8 +12,8 @@ const Header = () => {
         <nav>
             <ul className="flex">
                 {NAVLINKS.map(link =>
-                   <li>
-                        <Link className="text-md py-2 px-6 flex justify-center items-center" key={link.url} href={link.url}>
+                   <li key={link.url}>
+                        <Link className="text-md py-2 px-6 flex justify-center items-center"  href={link.url}>
                             {link.name}
                             {link.subLinks ? <Icon className="ml-2" size="xxs" name="chevron-down"/> : null}
                         </Link>

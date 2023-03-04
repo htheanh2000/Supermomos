@@ -15,6 +15,8 @@ body {
 }
 
 body {
+  min-height: 100vh; 
+  background: linear-gradient(138.11deg, #FEF452 0%, #942F70 121.92%);
 }
 
 a {
@@ -27,4 +29,25 @@ a {
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('/fonts/NeueHaasDisplayBlack.ttf') format('truetype');
+}
+
+.text-heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 60px;
+}
+
+.text-heading-3 {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 40px;
 }

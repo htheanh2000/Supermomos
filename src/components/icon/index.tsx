@@ -1,45 +1,47 @@
-import chevronDown from 'icon/chevron-down.svg'
-import Image from 'next/image'
+import chevronDown from "icon/chevron-down.svg";
+import calendar from "icon/calendar.svg";
+import clock from "icon/clock.svg";
+import Image from "next/image";
 
 type Props = {
-  color?: string // default: black
-  name: IconName
-  className?: string
-  size?: keyof typeof IconSize
-}
+  color?: string; // default: black
+  name: IconName;
+  className?: string;
+  size?: keyof typeof IconSize;
+};
 
-type IconName = keyof typeof icons
+type IconName = keyof typeof icons;
 
 export const icons = {
   'chevron-down': chevronDown,
- 
-}
+  calendar: calendar,
+  clock: clock,
+};
 
 const IconSize = {
-  xxs:12,
+  xxs: 12,
   xs: 16,
   sm: 24, // default size
   md: 32,
   lg: 40,
-}
+};
 
 const Icon = (props: Props) => {
-  const { name, size = 'sm', className } = props
- 
+  const { name, size = "sm", className } = props;
+
   return (
     <div>
-            <Image
-                src={icons[name]}
-                className={`cursor-pointer ${className}`}
-                alt={`Icon ${name}`}
-                width={IconSize[size]}
-                height={IconSize[size]}
-                
-            />
+      <Image
+        src={icons[name]}
+        className={`cursor-pointer ${className}`}
+        alt={`Icon ${name}`}
+        width={IconSize[size]}
+        height={IconSize[size]}
+      />
     </div>
-  )
-}
+  );
+};
 
-export type { IconName }
+export type { IconName };
 
-export default Icon
+export default Icon;
