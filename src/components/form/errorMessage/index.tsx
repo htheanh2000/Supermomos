@@ -1,13 +1,20 @@
-import { ReactNode } from 'react';
+import { ErrorMessage } from 'formik'
 
 interface Props {
-  children: ReactNode
+  name: string
+  className?: string
 }
 
-const Error = ({children}: Props) => {
+const Error = (props: Props) => {
   return (
-      <div className="px-4 py-3 mt-3 outline outline-1 outline-red-400 
-                rounded bg-red-100 text-red-900 text-xs">{children}</div>
+    <>
+      <ErrorMessage
+        name={props.name}
+        component="div"
+        className={`${props.className} px-4 py-3 mt-3 ring-1 ring-red-400
+              rounded bg-red-100 text-red-900 text-xs`}
+      />
+    </>
   )
 }
 

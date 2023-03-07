@@ -4,6 +4,7 @@ import calendar from "icon/calendar.svg";
 import clock from "icon/clock.svg";
 import location from "icon/location.svg";
 import close from "icon/close.svg";
+import tagClose from "icon/tag-close.svg";
 
 type Props = {
   color?: string; // default: black
@@ -21,6 +22,7 @@ export const icons = {
   clock: clock,
   location: location,
   close: close,
+  'tag-close': tagClose,
 };
 
 const IconSize = {

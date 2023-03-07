@@ -13,6 +13,8 @@ type Props = {
   onChange?: any;
   type?: HTMLInputTypeAttribute;
   value?: string;
+  defaultInput?: boolean;
+  id?: string;
 };
 
 export interface InputRef extends HTMLInputElement {
@@ -20,10 +22,7 @@ export interface InputRef extends HTMLInputElement {
 }
 
 const Input = forwardRef((props: Props, ref) => {
-  const {
-    className,
-    onChange,
-  } = props;
+  const { className, onChange, defaultInput = false, label, id } = props;
   const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => ({
     getValue: () => inputRef?.current?.value,
@@ -32,15 +31,17 @@ const Input = forwardRef((props: Props, ref) => {
   return (
     <div className={`${className}`}>
       {/* Current Desgin system don't include label */}
-      {/* <label htmlFor={label}>
-        {label}
-      </label> */}
 
-        <input
-          onChange={onChange}
-          {...props}
-          className={`w-full px-4 cursor-pointer pl-1 text-heading-4 text-gray text-heading-6 rounded outline-0`}
-        />
+      <input
+        onChange={onChange}
+        {...props}
+        className={
+          !defaultInput
+            ? "w-full px-4 cursor-pointer pl-1 text-heading-4 text-gray text-heading-6 rounded outline-0"
+            : "w-auto cursor-pointer"
+        }
+      />
+      <label className="mx-2 cursor-pointer" htmlFor={id}>{label}</label>
     </div>
   );
 });

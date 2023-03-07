@@ -9,7 +9,8 @@ const ChooseBanner = () => {
   const [file, setFile] = useState<number>();
   const [dragging, setDragging] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const size = 40;
+  const size = 10;
+  const BASE_URL ='https://supermomos-app-resources-us.s3.amazonaws.com/Images/SocialBanner'
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -51,7 +52,7 @@ const ChooseBanner = () => {
           loading="lazy"
           onClick={() => setIsOpen(true)}
           className="cursor-pointer bg-contain w-[500px] rounded-tl-[32px] rounded-br-[32px] "
-          src={`https://picsum.photos/id/${file}/480/320`}
+          src={`${BASE_URL}/banner_${file}.jpg`}
           alt="random image"
         />
       ) : (
@@ -82,18 +83,21 @@ const ChooseBanner = () => {
               </h3>
               <Icon onClick={() => setIsOpen(false)} size="lg" name="close" />
             </div>
-            <div className="w-full border-b-2 h-1  border-gray" />
-            <div className="px-4 grid grid-cols-6 grid-flow-row gap-1 justify-items-center items-center overflow-y-scroll h-[600px] my-4 ">
+            <div className="w-full border-b-2 h-1  border-gray " />
+            <div className="min-h-[600px] overflow-y-scroll">
+            <div className="px-4 grid grid-cols-6 grid-flow-row gap-1 justify-items-center items-center  my-4 ">
               {Array.from(Array(size).keys()).map((item, index) => (
                 <img
                   loading="lazy"
-                  onClick={() => handlePickBanner(item)}
+                  onClick={() => handlePickBanner(index+1)}
                   className="cursor-pointer bg-contain w-48 h-32"
-                  src={`https://picsum.photos/id/${index}/480/320`}
+                  src={`${BASE_URL}/banner_${index+1}.jpg`}
                   alt="random image"
                 />
               ))}
             </div>
+            </div>
+            
             <div className="w-full border-b-2 h-1  border-gray" />
             <div className="flex float-right p-4">
               <Button style="secondary" className="w-20">
