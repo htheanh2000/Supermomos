@@ -4,8 +4,14 @@ import Image from "next/image";
 import Modal from "@/components/modal";
 import Icon from "@/components/icon";
 import Button from "@/components/button";
+import { Field, useField } from "formik";
 
-const ChooseBanner = () => {
+interface IProps {
+  value: unknown;
+  onChange: any;
+}
+
+const ChooseBanner = ({value, onChange}: IProps) => {
   const [file, setFile] = useState<number>();
   const [dragging, setDragging] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +23,7 @@ const ChooseBanner = () => {
   const handlePickBanner = (item: number) => {
     setIsOpen(false);
     setFile(item);
-    console.log(item);
+    // onChange()
   };
 
   const handleDragOver = (event: any) => {
@@ -35,7 +41,7 @@ const ChooseBanner = () => {
     setFile(file);
     setDragging(false);
   };
-
+  
   const handleFileSelect = (event: any) => {
     const file = event.target.files[0];
     setFile(file);
@@ -63,8 +69,8 @@ const ChooseBanner = () => {
           onClick={() => setIsOpen(true)}
         />
       )}
-
-      <input
+      
+      {/* <input
         ref={fileInputRef}
         id="dropzone-file"
         type="file"
@@ -72,7 +78,7 @@ const ChooseBanner = () => {
         accept="image/*"
         onChange={handleFileSelect}
         multiple
-      />
+      /> */}
       {/* Choose a banner modal  */}
       {isOpen && (
         <Modal>

@@ -14,8 +14,8 @@ const STYLES = {
     'text-color': 'text-black',
   },
   disable: {
-    bg: 'bg-gray',
-    'text-color': 'text-black',
+    bg: 'bg-[#808080]',
+    'text-color': 'text-gray',
   },
 };
 

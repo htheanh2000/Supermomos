@@ -4,6 +4,7 @@ import {
   useImperativeHandle,
   useRef,
 } from "react";
+import Icon, { IconName } from "../icon";
 
 type Props = {
   placeholder?: string;
@@ -15,6 +16,7 @@ type Props = {
   value?: string;
   defaultInput?: boolean;
   id?: string;
+  icon?: IconName
 };
 
 export interface InputRef extends HTMLInputElement {
@@ -22,7 +24,7 @@ export interface InputRef extends HTMLInputElement {
 }
 
 const Input = forwardRef((props: Props, ref) => {
-  const { className, onChange, defaultInput = false, label, id } = props;
+  const { className, onChange, defaultInput = false, label, id, icon } = props;
   const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => ({
     getValue: () => inputRef?.current?.value,
@@ -30,8 +32,8 @@ const Input = forwardRef((props: Props, ref) => {
 
   return (
     <div className={`${className}`}>
-      {/* Current Desgin system don't include label */}
-
+    <div className="flex items-center">
+     {icon && <Icon size='lg' name={icon} className="mr-4"/>} 
       <input
         onChange={onChange}
         {...props}
@@ -41,7 +43,8 @@ const Input = forwardRef((props: Props, ref) => {
             : "w-auto cursor-pointer"
         }
       />
-      <label className="mx-2 cursor-pointer" htmlFor={id}>{label}</label>
+    </div>
+    {label && <label className="mx-2 cursor-pointer" htmlFor={id}>{label}</label>}   
     </div>
   );
 });

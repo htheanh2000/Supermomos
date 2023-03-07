@@ -34,7 +34,7 @@ a {
 
 @font-face {
   font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('/fonts/NeueHaasDisplayBlack.ttf') format('truetype');
+  src: url('/fonts/NeueHaas/NeueHaasDisplayMedium.ttf') format('truetype');
 }
 
 .text-heading {

@@ -6,12 +6,8 @@ import Checkbox from "@/components/form/checkbox";
 import ErrorMessage from "@/components/form/errorMessage";
 import Field from "@/components/form/field";
 import Radio from "@/components/form/radio";
-import SelectForm from "@/components/form/select";
-import Icon from "@/components/icon";
-import Input from "@/components/input";
-import Modal from "@/components/modal";
 import TagPicker from "@/components/tagpicker";
-import { Form, Formik } from "formik";
+import { Form, Formik, Field as FormikField } from "formik";
 import * as Yup from "yup";
 import ChooseBanner from "./chooseBanner";
 const CreateSocialPage = () => {
@@ -52,13 +48,14 @@ const CreateSocialPage = () => {
 
   const validationSchema = Yup.object({
     // title: Yup.string().required(),
-    startAt: Yup.date().required(),
+    date: Yup.date().required(),
+    time: Yup.string().required(),
     venue: Yup.string().required(),
     capacity: Yup.number().required(),
     price: Yup.number(),
     description: Yup.string().required(),
-    banner: Yup.string().required(),
-    tags: Yup.array().of(Yup.string()).required(),
+    // banner: Yup.string().required(),
+    // tags: Yup.array().of(Yup.string()).required(),
     isManualApprove: Yup.boolean(),
     privacy: Yup.string().required(),
   });
@@ -119,112 +116,92 @@ const CreateSocialPage = () => {
                     Untitle Event
                   </h1>
                   <div className="mt-8 flex">
-                    <div className="flex items-center">
-                      <Icon size="lg" name="calendar" />
-                      <CustomDatePicker
-                        name={"date"}
-                        className=" max-w-[11rem] w-44 ml-4"
-                      />
-                    </div>
-                    <div className="flex items-center ml-4">
-                      <Icon size="lg" name="clock" />
-                      <CustomDatePicker
-                        timeIntervals={15}
-                        timeCaption="Time"
-                        dateFormat="h:mm aa"
-                        showTimeSelect
-                        showTimeSelectOnly
-                        placeholderText="Time"
-                        className="max-w-[11rem] w-44 ml-4"
-                      />
-                    </div>
-                  </div>
-                  <ErrorMessage name="date" />
-                  <div className="mt-8 flex items-center">
-                    <Icon name="location" />
-                    <Field
-                      className="ml-4 w-full max-w-md"
-                      name="venue"
-                      placeholder="Venue"
-                      label={"venue"}
+                    <CustomDatePicker
+                      icon="calendar"
+                      name={"date"}
+                      placeholder='date'
+                      datePickerClassName=" max-w-[12rem] w-44 ml-4"
+                    />
+                    <CustomDatePicker
+                      name="time"
+                      className=" ml-4"
+                      icon="clock"
+                      placeholder="Time"
+                      datePickerClassName="max-w-[12rem] w-44 ml-4"
                     />
                   </div>
-                  {/* <ErrorMessage name="venue" /> */}
+                  <Field
+                    icon="location"
+                    className="w-full max-w-md mt-8 "
+                    name="venue"
+                    placeholder="Venue"
+                  />
                   <div className="flex justify-between max-w-md">
-                    <div className="mt-8 flex items-center">
-                      <Icon name="location" />
-                      <Field
-                        className="ml-4 w-[160px]"
-                        type="number"
-                        min={1}
-                        max={50}
-                        name="capacity"
-                        placeholder="Max capacity"
-                        label={"capacity"}
-                      />
-                    </div>
-                    <div className="mt-8 flex items-center">
-                      <Icon name="location" />
-                      <Field
-                        className="ml-4 w-[160px] "
-                        type="number"
-                        min={1}
-                        max={50}
-                        name="price"
-                        placeholder="Cost per person"
-                        label={"price"}
-                      />
-                    </div>
+                    <Field
+                      icon="location"
+                      className="w-[160px] mt-8"
+                      type="number"
+                      min={1}
+                      max={50}
+                      name="capacity"
+                      placeholder="Max capacity"
+                    />
+                    <Field
+                      icon="location"
+                      className="w-[160px] mt-8"
+                      type="number"
+                      min={1}
+                      max={50}
+                      name="price"
+                      placeholder="Cost per person"
+                    />
                   </div>
                 </section>
-                <ChooseBanner />
+                <ChooseBanner value={formik.values.banner} onChange={formik.handleChange} />
                 <div className="min-w-full mt-8 flex flex-col">
                   <label>Description</label>
                   <textarea
                     rows={10}
                     cols={50}
+                    onChange={formik.handleChange}
                     name="description"
                     className="w-[600px] rounded-lg px-3 py-3 outline-none mt-2"
                     placeholder="Description of your event..."
                   ></textarea>
                   <ErrorMessage name="description" />
                 </div>
-                <div className="bg-white mt-8 rounded-lg  p-8  min-w-max max-w-2xl">
+                <div className="bg-white mt-8 rounded-lg  p-8  min-w-[600px] max-w-2xl">
                   <h2 className="text-heading-3 text-purple bg-yellow w-fit py-1 px-3">
                     Settings
                   </h2>
-                  <div className="">
-                    <div className="cursor-pointer mt-4">
-                      <Checkbox name="isManualApprove">
-                        I want to approve attendees
-                      </Checkbox>
-                    </div>
-                  </div>
-                  <div className="w-[600px]">
-                    <Radio name="Privacy" options={PRIVACYS} />
-                    <TagPicker
-                      title="Tag your social"
-                      subTitle="Pick tags for our curation engine to work its magin"
-                      className="mt-6"
-                      data={SOCIAL_TAGS}
-                    />
-                  </div>
+                  <Checkbox
+                    className="cursor-pointer mt-4"
+                    name="isManualApprove"
+                  >
+                    I want to approve attendees
+                  </Checkbox>
+                  <Radio name="privacy" options={PRIVACYS} />
+                  <TagPicker
+                    title="Tag your social"
+                    subTitle="Pick tags for our curation engine to work its magin"
+                    className="mt-6"
+                    data={SOCIAL_TAGS}
+                  />
+                  <ErrorMessage name="tags"></ErrorMessage>
                 </div>
               </div>
-              <div className="w-full my-16">
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full"
-                  style={
-                    formik.isValid && !formik.isSubmitting
-                      ? "secondary"
-                      : "disable"
-                  }
-                >
-                  CREATE SPCIAL
-                </Button>
-              </div>
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full max-w-[600px] my-16"
+                style={
+                  formik.isValid && !formik.isSubmitting
+                    ? "primary"
+                    : "disable"
+                }
+              >
+                CREATE SOCIAL
+              </Button>
             </Form>
           );
         }}
