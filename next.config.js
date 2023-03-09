@@ -1,16 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   images: {
-    domain:[ "supermomos-app-resources-us.s3.amazonaws.com"],
+    domains: ['supermomos-app-resources-us.s3.amazonaws.com'],
   },
+
   experimental: {
     appDir: true,
     fontLoaders: [
       { loader: 'next/font/google', options: { subsets: ['latin'] } },
     ]
   },
-  
-
 
 
 }

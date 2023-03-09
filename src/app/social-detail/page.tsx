@@ -5,6 +5,7 @@ import { useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
 import { formatDate, getTime } from "@/utils/datetime";
 import { notFound } from "next/navigation";
+import Image from 'next/image'
 const SocialDetail = () => {
   const {data} = useAppSelector((state:RootState) => state.social)
   if(!data?.id) {
@@ -13,7 +14,9 @@ const SocialDetail = () => {
   return (
     <Container className="my-32">
       <div className="relative">
-      <img
+      <Image
+      width={500}
+      height={500}
           loading="lazy"
           className="mb-10 desktop:absolute desktop:-z-10 desktop:right-0 desktop:-top-10 cursor-pointer bg-contain w-[500px] rounded-tl-[32px] rounded-br-[32px] "
           src={data.banner}

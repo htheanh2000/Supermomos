@@ -24,10 +24,12 @@ const ChooseBanner = ({ value, onChange }: IProps) => {
     <div>
       {file ? (
         <Image
-          fill
+          width={500}
+          height={300}
+
           loading="lazy"
           onClick={() => setIsOpen(true)}
-          className="cursor-pointer bg-contain w-[500px] rounded-tl-[32px] rounded-br-[32px] "
+          className="cursor-pointer bg-contain  rounded-tl-[32px] rounded-br-[32px] "
           src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/banner_${file}.jpg`}
           alt="random image"
         />
@@ -55,11 +57,12 @@ const ChooseBanner = ({ value, onChange }: IProps) => {
               <div className="px-4 grid grid-cols-6 grid-flow-row gap-1 justify-items-center items-center  my-4 ">
                 {Array.from(Array(size).keys()).map((item, index) => (
                   <Image
-                    fill
+                    className="cursor-pointer  w-48 h-32 overflow-hidden"
                     key={item}
+                    width={192}
+                    height={128}
                     loading="lazy"
                     onClick={() => handlePickBanner(index + 1)}
-                    className="cursor-pointer bg-contain w-48 h-32"
                     src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/banner_${
                       index + 1
                     }.jpg`}
