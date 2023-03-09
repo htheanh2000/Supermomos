@@ -1,23 +1,16 @@
 import { createSlice, createAsyncThunk, Reducer } from '@reduxjs/toolkit'
-import { notFound, redirect } from 'next/navigation';
-
 // omit imports and state
 export const createSocialAction = createAsyncThunk('createSocial', async (props: any, { rejectWithValue }) => {
   try {
-
-    console.log("========createSocialAction=============");
     const response =  await fetch("api/interview/social", {
       method: "POST",
       body: JSON.stringify(props),
       headers: {
         "Content-Type": "application/json",
       },
-      
     });
     const data = await response.json()
-    
     return data;
-
   } catch (error: any) {
     if (!error.response) {
       throw error
@@ -26,10 +19,24 @@ export const createSocialAction = createAsyncThunk('createSocial', async (props:
   }
 })
 
+interface Interview {
+  id: string;
+  title: string;
+  startAt: string;
+  venue: string;
+  capacity: number;
+  price: number;
+  description: string;
+  isManualApprove: boolean;
+  privacy: string;
+  banner: string;
+  tags: string[];
+  questionnaire?: any ;
+}
 
 export interface IState {
   status: 'idle' | 'loading',
-  data: unknown,
+  data: Interview | null,
   error: any
 }
 

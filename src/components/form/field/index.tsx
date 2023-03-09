@@ -6,6 +6,7 @@ import { IconName } from "@/components/icon";
 // Define interface for props
 //TO DO: extends Partial<HTMLInputElement> make error but can not resolve
 interface IProps {
+  defaultValue?: string;
   label?: string;
   name: string;
   id?: string;

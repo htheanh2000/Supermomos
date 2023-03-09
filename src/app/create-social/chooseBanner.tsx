@@ -8,7 +8,7 @@ import { Field, useField } from "formik";
 
 interface IProps {
   value: unknown;
-  onChange: any;
+  onChange: (text:string) => void;
 }
 
 const ChooseBanner = ({value, onChange}: IProps) => {
@@ -16,14 +16,11 @@ const ChooseBanner = ({value, onChange}: IProps) => {
   const [dragging, setDragging] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const size = 10;
-  const BASE_URL ='https://supermomos-app-resources-us.s3.amazonaws.com/Images/SocialBanner'
-
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const handlePickBanner = (item: number) => {
     setIsOpen(false);
     setFile(item);
-    // onChange()
+    onChange(`${process.env.NEXT_PUBLIC_S3_BASE_URL}/banner_${item}.jpg`)
   };
 
   const handleDragOver = (event: any) => {
@@ -58,7 +55,7 @@ const ChooseBanner = ({value, onChange}: IProps) => {
           loading="lazy"
           onClick={() => setIsOpen(true)}
           className="cursor-pointer bg-contain w-[500px] rounded-tl-[32px] rounded-br-[32px] "
-          src={`${BASE_URL}/banner_${file}.jpg`}
+          src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/banner_${file}.jpg`}
           alt="random image"
         />
       ) : (
@@ -94,10 +91,11 @@ const ChooseBanner = ({value, onChange}: IProps) => {
             <div className="px-4 grid grid-cols-6 grid-flow-row gap-1 justify-items-center items-center  my-4 ">
               {Array.from(Array(size).keys()).map((item, index) => (
                 <img
+                  key={item}
                   loading="lazy"
                   onClick={() => handlePickBanner(index+1)}
                   className="cursor-pointer bg-contain w-48 h-32"
-                  src={`${BASE_URL}/banner_${index+1}.jpg`}
+                  src={`${process.env.NEXT_PUBLIC_S3_BASE_URL}/banner_${index+1}.jpg`}
                   alt="random image"
                 />
               ))}

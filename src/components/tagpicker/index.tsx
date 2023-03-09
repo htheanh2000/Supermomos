@@ -9,6 +9,7 @@ interface IProps {
     label: string;
     value: unknown;
   }[];
+  onChange: (tags:ITag[]) => void
 }
 
 interface ITag {
@@ -18,23 +19,26 @@ interface ITag {
   selected: boolean;
 }
 
-const TagPicker = ({ data,title, subTitle, className = "" }: IProps) => {
+const TagPicker = ({ data,title, subTitle, className = "",onChange }: IProps) => {
   const [selecteds, setSelected] = useState<ITag[]>(() =>
     data.map((tag, index) => {
       return { ...tag, selected: false, id: index };
     })
   );
 
+
   const handleSelectTag = (tag: ITag) => {
     const newTags = [...selecteds];
     newTags[tag.id].selected = true;
     setSelected(newTags);
+    onChange(newTags.filter(tag => tag.selected))
   };
 
   const handleUnselectTag = (tag: ITag) => {
     const newTags = [...selecteds];
     newTags[tag.id].selected = false;
     setSelected(newTags);
+    onChange(newTags.filter(tag => tag.selected))
   };
   return (
     <div className={className}>

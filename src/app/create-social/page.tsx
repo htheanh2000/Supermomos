@@ -13,10 +13,12 @@ import ChooseBanner from "./chooseBanner";
 import { useAppDispatch } from "@/store/hooks";
 import { createSocialAction } from "@/store/features/social/socialSlice";
 import { notFound, redirect } from "next/navigation";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { PRIVACYS, SOCIAL_TAGS } from "@/constant/social";
 
 interface IForm {
-  title: String;
+  title: string;
   startAt: Date;
   venue: String;
   capacity: Number;
@@ -28,7 +30,7 @@ interface IForm {
   privacy: String;
 }
 const initialValues: IForm = {
-  title: "",
+  title: "Untitle Event",
   startAt: new Date(),
   venue: "",
   capacity: 0,
@@ -41,6 +43,7 @@ const initialValues: IForm = {
 };
 
 const CreateSocialPage = () => {
+  const [tags, setTags] = useState<any>([]);
   // + title: String(Required)
   // + startAt: DateTime(Required)
   // + venue: String(Required)
@@ -51,77 +54,42 @@ const CreateSocialPage = () => {
   // + tags: Array<String>(Required)
   // + isManualApprove: Boolean(Optional)
   // + privacy: String(Required)
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const validationSchema = Yup.object({
-    // title: Yup.string().required(),
+    title: Yup.string().required(),
     date: Yup.date().required(),
     time: Yup.string().required(),
     venue: Yup.string().required(),
     capacity: Yup.number().required(),
     price: Yup.number(),
     description: Yup.string().required(),
-    // banner: Yup.string().required(),
-    // tags: Yup.array().of(Yup.string()).required(),
+    banner: Yup.string().required(),
+    tags: Yup.array().min(1).required(),
     isManualApprove: Yup.boolean(),
     privacy: Yup.string().required(),
   });
 
   const onSubmit = async (values: any, { setSubmitting }: any) => {
-    router.push('/social-detail')
-
     console.log("On submit");
-    console.log(values);
-    const response = await dispatch(createSocialAction(values));
-    console.log("ON SUBMIT RESPONSE",response);
+
+
+    const body = {
+      ...values,
+      startAt: new Date(values.date + "T" + values.time + ":00"),
+      tags: values.tags.map((tag: { value: string; }) => tag.value)
+    };
+    const response = await dispatch(createSocialAction(body));
+    console.log("ON SUBMIT RESPONSE", response);
+    router.push('social-detail')
     setSubmitting(false);
-    if(response.payload.id) {
-      redirect('/detail-social'+ response.payload.id)
-    }
-    else {
-      notFound()
-    }
   };
-
-  const SOCIAL_TAGS = [
-    {
-      label: "Engineering",
-      value: "Engineering",
-    },
-    {
-      label: "Product",
-      value: "Product",
-    },
-    {
-      label: "Marketing",
-      value: "Marketing",
-    },
-    {
-      label: "Design",
-      value: "Design",
-    },
-  ];
-
-  const PRIVACYS = [
-    {
-      label: "Public",
-      value: "Public",
-    },
-    {
-      label: "Curated Audience",
-      value: "Curated Audience",
-    },
-    {
-      label: "Community Only",
-      value: "Community Only",
-    },
-  ];
 
   return (
     <Container className="mt-32">
       <Formik
         initialValues={initialValues}
-        // validationSchema={validationSchema}
+        validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
         {(formik) => {
@@ -129,9 +97,15 @@ const CreateSocialPage = () => {
             <Form>
               <div className="flex flex-wrap justify-between">
                 <section>
-                  <h1 className="text-heading text-white bg-purple w-fit py-1 px-3">
-                    Untitle Event
-                  </h1>
+                  <textarea
+                    rows={Math.floor(formik.values.title.length / 15) + 1}
+                    cols={15}
+                    onChange={formik.handleChange}
+                    name="title"
+                    className="bg-purple py-1 px-3 text-white w-full text-heading outline-0 scrollbar-hidden"
+                    defaultValue={initialValues.title}
+                  ></textarea>
+                  <ErrorMessage name="title" />
                   <div className="mt-8 flex">
                     <CustomDatePicker
                       icon="calendar"
@@ -149,11 +123,11 @@ const CreateSocialPage = () => {
                   </div>
                   <Field
                     icon="location"
-                    className="w-full max-w-md mt-8 "
+                    className="w-full  mt-8 "
                     name="venue"
                     placeholder="Venue"
                   />
-                  <div className="flex justify-between max-w-md">
+                  <div className="flex justify-between ">
                     <Field
                       icon="location"
                       className="w-[160px] mt-8"
@@ -174,10 +148,13 @@ const CreateSocialPage = () => {
                     />
                   </div>
                 </section>
-                <ChooseBanner
-                  value={formik.values.banner}
-                  onChange={formik.handleChange}
-                />
+                <div>
+                  <ChooseBanner
+                    value={formik.values.banner}
+                    onChange={(data) => formik.setFieldValue("banner", data)}
+                  />
+                <ErrorMessage name="banner" />
+                </div>
                 <div className="min-w-full mt-8 flex flex-col">
                   <label>Description</label>
                   <textarea
@@ -206,6 +183,7 @@ const CreateSocialPage = () => {
                     subTitle="Pick tags for our curation engine to work its magin"
                     className="mt-6"
                     data={SOCIAL_TAGS}
+                    onChange={(data) => formik.setFieldValue("tags", data)}
                   />
                   <ErrorMessage name="tags"></ErrorMessage>
                 </div>

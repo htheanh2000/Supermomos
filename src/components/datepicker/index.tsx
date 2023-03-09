@@ -26,7 +26,7 @@ const CustomDatePicker = (props: Props) => {
       <div className="flex items-center">
         {icon && <Icon size="lg" name={icon} />}
         <input
-          className={`cursor-pointer pl-1 text-heading-3 text-gray outline rounded  outline-1 outline-white 
+          className={`cursor-pointer pl-1 text-heading-6 text-gray outline rounded  outline-1 outline-white 
           ${datePickerClassName}`}
           type={name}
           {...field}

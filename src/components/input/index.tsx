@@ -16,7 +16,7 @@ type Props = {
   value?: string;
   defaultInput?: boolean;
   id?: string;
-  icon?: IconName
+  icon?: IconName;
 };
 
 export interface InputRef extends HTMLInputElement {
@@ -31,20 +31,24 @@ const Input = forwardRef((props: Props, ref) => {
   }));
 
   return (
-    <div className={`${className}`}>
-    <div className="flex items-center">
-     {icon && <Icon size='lg' name={icon} className="mr-4"/>} 
-      <input
-        onChange={onChange}
-        {...props}
-        className={
-          !defaultInput
-            ? "w-full px-4 cursor-pointer pl-1 text-heading-4 text-gray text-heading-6 rounded outline-0"
-            : "w-auto cursor-pointer"
-        }
-      />
-    </div>
-    {label && <label className="mx-2 cursor-pointer" htmlFor={id}>{label}</label>}   
+    <div>
+      <div className="flex items-center">
+        {icon && <Icon size="lg" name={icon}  />}
+        <input
+          onChange={onChange}
+          {...props}
+          className={
+            !defaultInput
+              ? `w-full px-4 cursor-pointer pl-1 ml-2 text-gray text-heading-6 rounded outline-0 ${className}`
+              : `w-auto cursor-pointer  ${className}`
+          }
+        />
+      </div>
+      {label && (
+        <label className="mx-2 cursor-pointer" htmlFor={id}>
+          {label}
+        </label>
+      )}
     </div>
   );
 });
