@@ -10,9 +10,39 @@ import TagPicker from "@/components/tagpicker";
 import { Form, Formik, Field as FormikField } from "formik";
 import * as Yup from "yup";
 import ChooseBanner from "./chooseBanner";
+import { useAppDispatch } from "@/store/hooks";
+import { createSocialAction } from "@/store/features/social/socialSlice";
+import { notFound, redirect } from "next/navigation";
+import { useRouter } from 'next/navigation';
+
+interface IForm {
+  title: String;
+  startAt: Date;
+  venue: String;
+  capacity: Number;
+  price: Number;
+  description: String;
+  banner: String;
+  tags: Array<String>;
+  isManualApprove: Boolean;
+  privacy: String;
+}
+const initialValues: IForm = {
+  title: "",
+  startAt: new Date(),
+  venue: "",
+  capacity: 0,
+  price: 0,
+  description: "",
+  banner: "",
+  tags: [],
+  isManualApprove: false,
+  privacy: "",
+};
+
 const CreateSocialPage = () => {
   // + title: String(Required)
-  //   	+ startAt: DateTime(Required)
+  // + startAt: DateTime(Required)
   // + venue: String(Required)
   // + capacity: Number(Required)
   // + price: Number(Optional)
@@ -21,31 +51,8 @@ const CreateSocialPage = () => {
   // + tags: Array<String>(Required)
   // + isManualApprove: Boolean(Optional)
   // + privacy: String(Required)
-  interface IForm {
-    title: String;
-    startAt: Date;
-    venue: String;
-    capacity: Number;
-    price: Number;
-    description: String;
-    banner: String;
-    tags: Array<String>;
-    isManualApprove: Boolean;
-    privacy: String;
-  }
-  const initialValues: IForm = {
-    title: "",
-    startAt: new Date(),
-    venue: "",
-    capacity: 0,
-    price: 0,
-    description: "",
-    banner: "",
-    tags: [],
-    isManualApprove: false,
-    privacy: "",
-  };
-
+  const dispatch = useAppDispatch()
+  const router = useRouter();
   const validationSchema = Yup.object({
     // title: Yup.string().required(),
     date: Yup.date().required(),
@@ -60,10 +67,20 @@ const CreateSocialPage = () => {
     privacy: Yup.string().required(),
   });
 
-  const onSubmit = (values: any, { setSubmitting }: any) => {
+  const onSubmit = async (values: any, { setSubmitting }: any) => {
+    router.push('/social-detail')
+
     console.log("On submit");
     console.log(values);
+    const response = await dispatch(createSocialAction(values));
+    console.log("ON SUBMIT RESPONSE",response);
     setSubmitting(false);
+    if(response.payload.id) {
+      redirect('/detail-social'+ response.payload.id)
+    }
+    else {
+      notFound()
+    }
   };
 
   const SOCIAL_TAGS = [
@@ -104,7 +121,7 @@ const CreateSocialPage = () => {
     <Container className="mt-32">
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        // validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
         {(formik) => {
@@ -119,7 +136,7 @@ const CreateSocialPage = () => {
                     <CustomDatePicker
                       icon="calendar"
                       name={"date"}
-                      placeholder='date'
+                      placeholder="date"
                       datePickerClassName=" max-w-[12rem] w-44 ml-4"
                     />
                     <CustomDatePicker
@@ -157,7 +174,10 @@ const CreateSocialPage = () => {
                     />
                   </div>
                 </section>
-                <ChooseBanner value={formik.values.banner} onChange={formik.handleChange} />
+                <ChooseBanner
+                  value={formik.values.banner}
+                  onChange={formik.handleChange}
+                />
                 <div className="min-w-full mt-8 flex flex-col">
                   <label>Description</label>
                   <textarea
@@ -195,9 +215,7 @@ const CreateSocialPage = () => {
                 size="lg"
                 className="w-full max-w-[600px] my-16"
                 style={
-                  formik.isValid && !formik.isSubmitting
-                    ? "primary"
-                    : "disable"
+                  formik.isValid && !formik.isSubmitting ? "primary" : "disable"
                 }
               >
                 CREATE SOCIAL

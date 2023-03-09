@@ -1,12 +1,15 @@
 import Header from "@/components/header";
 import "./globals.css";
-import { Inter } from 'next/font/google';
+import { Inter } from "next/font/google";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
+import { Providers } from "@/components/provider";
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-})
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -21,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body>
+        <Providers>
           <Header></Header>
           {children}
+        </Providers>
       </body>
     </html>
   );

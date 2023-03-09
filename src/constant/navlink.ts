@@ -8,7 +8,7 @@
     },
     {
         name: 'Socicals',
-        url: '/socicals',
+        url: '/create-social',
     },
     {
         name: 'Past Socicals',
