@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -20,11 +24,25 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "image/*": ["./public/images/*"],
-      "icon/*": ["./public/icons/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "image/*": [
+        "./public/images/*"
+      ],
+      "icon/*": [
+        "./public/icons/*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "D:\\Code\\Supermomos\\.next/types/**/*.ts"
+, "next.config.js", "next.config.js"  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,8 +1,6 @@
 import Header from "@/components/header";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { Provider } from "react-redux";
-import { store } from "@/store/store";
 import { Providers } from "@/components/provider";
 
 // If loading a variable font, you don't need to specify the font weight
