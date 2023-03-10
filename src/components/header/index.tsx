@@ -10,7 +10,7 @@ const Header = () => {
     <Container className="py-6 flex justify-between items-center">
         <Image src={ImgLogo} alt="ImgLogo"/>
         <nav>
-            <ul className="flex">
+            <ul className="max-desktop:hidden flex">
                 {NAVLINKS.map(link =>
                    <li key={link.url}>
                         <Link className="text-md py-2 px-6 flex justify-center items-center"  href={link.url}>

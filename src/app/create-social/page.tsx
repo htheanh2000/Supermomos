@@ -73,15 +73,14 @@ const CreateSocialPage = () => {
   const onSubmit = async (values: any, { setSubmitting }: any) => {
     console.log("On submit");
 
-
     const body = {
       ...values,
       startAt: new Date(values.date + "T" + values.time + ":00"),
-      tags: values.tags.map((tag: { value: string; }) => tag.value)
+      tags: values.tags.map((tag: { value: string }) => tag.value),
     };
     const response = await dispatch(createSocialAction(body));
     console.log("ON SUBMIT RESPONSE", response);
-    router.push('social-detail')
+    router.push("social-detail");
     setSubmitting(false);
   };
 
@@ -129,7 +128,7 @@ const CreateSocialPage = () => {
                   />
                   <div className="flex justify-between ">
                     <Field
-                      icon="location"
+                      icon="people"
                       className="w-[160px] mt-8"
                       type="number"
                       min={1}
@@ -138,7 +137,7 @@ const CreateSocialPage = () => {
                       placeholder="Max capacity"
                     />
                     <Field
-                      icon="location"
+                      icon="cost"
                       className="w-[160px] mt-8"
                       type="number"
                       min={1}
@@ -153,51 +152,55 @@ const CreateSocialPage = () => {
                     value={formik.values.banner}
                     onChange={(data) => formik.setFieldValue("banner", data)}
                   />
-                <ErrorMessage name="banner" />
+                  <ErrorMessage name="banner" />
                 </div>
-                <div className="min-w-full mt-8 flex flex-col">
-                  <label>Description</label>
-                  <textarea
-                    rows={10}
-                    cols={50}
-                    onChange={formik.handleChange}
-                    name="description"
-                    className="w-[600px] rounded-lg px-3 py-3 outline-none mt-2"
-                    placeholder="Description of your event..."
-                  ></textarea>
-                  <ErrorMessage name="description" />
+                <div className=" w-full desktop:w-[600px]">
+                  <div className="min-w-full mt-8 flex flex-col">
+                    <label>Description</label>
+                    <textarea
+                      rows={10}
+                      cols={50}
+                      onChange={formik.handleChange}
+                      name="description"
+                      className=" rounded-lg px-3 py-3 outline-none mt-2"
+                      placeholder="Description of your event..."
+                    ></textarea>
+                    <ErrorMessage name="description" />
+                  </div>
+                  <div className="bg-white mt-8 rounded-lg  p-8  max-w-2xl">
+                    <h2 className="text-heading-3 text-purple bg-yellow w-fit py-1 px-3">
+                      Settings
+                    </h2>
+                    <Checkbox
+                      className="cursor-pointer mt-4"
+                      name="isManualApprove"
+                    >
+                      I want to approve attendees
+                    </Checkbox>
+                    <Radio name="privacy" options={PRIVACYS} />
+                    <TagPicker
+                      title="Tag your social"
+                      subTitle="Pick tags for our curation engine to work its magin"
+                      className="mt-6"
+                      data={SOCIAL_TAGS}
+                      onChange={(data) => formik.setFieldValue("tags", data)}
+                    />
+                    <ErrorMessage name="tags"></ErrorMessage>
+                  </div>
                 </div>
-                <div className="bg-white mt-8 rounded-lg  p-8  min-w-[600px] max-w-2xl">
-                  <h2 className="text-heading-3 text-purple bg-yellow w-fit py-1 px-3">
-                    Settings
-                  </h2>
-                  <Checkbox
-                    className="cursor-pointer mt-4"
-                    name="isManualApprove"
-                  >
-                    I want to approve attendees
-                  </Checkbox>
-                  <Radio name="privacy" options={PRIVACYS} />
-                  <TagPicker
-                    title="Tag your social"
-                    subTitle="Pick tags for our curation engine to work its magin"
-                    className="mt-6"
-                    data={SOCIAL_TAGS}
-                    onChange={(data) => formik.setFieldValue("tags", data)}
-                  />
-                  <ErrorMessage name="tags"></ErrorMessage>
-                </div>
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full  my-16"
+                  style={
+                    formik.isValid && !formik.isSubmitting
+                      ? "primary"
+                      : "disable"
+                  }
+                >
+                  CREATE SOCIAL
+                </Button>
               </div>
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full max-w-[600px] my-16"
-                style={
-                  formik.isValid && !formik.isSubmitting ? "primary" : "disable"
-                }
-              >
-                CREATE SOCIAL
-              </Button>
             </Form>
           );
         }}

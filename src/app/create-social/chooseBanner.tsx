@@ -35,7 +35,7 @@ const ChooseBanner = ({ value, onChange }: IProps) => {
         />
       ) : (
         <Image
-          className="max-w-lg cursor-pointer"
+          className="mt-8 desktop:max-w-lg cursor-pointer"
           src={ImgAddBanner}
           alt="ImgAddBanner"
           onClick={() => setIsOpen(true)}

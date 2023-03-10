@@ -31,15 +31,15 @@ const SocialDetail = () => {
           <Icon size="lg" className="mr-2" name="clock" />
           <p className="text-heading-3">{getTime(data.startAt)}</p>
         </div>
-        <div className="mt-8 flex">
+        <div className="mt-8 flex items-center">
           <Icon className="mr-2" name="location" />
-          <p>{data.venue}</p>
+          <p className="font-semibold">{data.venue}</p>
         </div>
         <div className="mt-8 flex items-center">
-          <Icon size="xs" className="mr-2" name="calendar" />
-          <p className="mr-12">{data.capacity}</p>
-          <Icon size="xs" className="mr-2" name="clock" />
-          <p className="">{data.price}</p>
+          <Icon size="xs" className="mr-2" name="people" />
+          <p className="font-semibold mr-12">{data.capacity} people</p>
+          <Icon size="xs" className="mr-2" name="cost" />
+          <p className="font-semibold">${data.price}</p>
         </div>
         
         <p className="max-w-2xl mt-16 whitespace-pre-wrap" >

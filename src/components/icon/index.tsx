@@ -4,6 +4,8 @@ import calendar from "icon/calendar.svg";
 import clock from "icon/clock.svg";
 import location from "icon/location.svg";
 import close from "icon/close.svg";
+import people from "icon/people.svg";
+import cost from "icon/cost.svg";
 import tagClose from "icon/tag-close.svg";
 
 type Props = {
@@ -23,6 +25,8 @@ export const icons = {
   location: location,
   close: close,
   'tag-close': tagClose,
+  people: people,
+  cost: cost
 };
 
 const IconSize = {

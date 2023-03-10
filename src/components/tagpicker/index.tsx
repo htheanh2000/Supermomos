@@ -47,11 +47,11 @@ const TagPicker = ({ data,title, subTitle, className = "",onChange }: IProps) =>
       
       <div className="mt-4">
         {/* Selected tags */}
-        <div className="flex mb-4">
+        <div className="flex mb-4 flex-wrap">
           {selecteds
             .filter((tag) => tag.selected)
             .map((tag) => (
-              <div key={tag.id} onClick={() => handleUnselectTag(tag)} className="bg-purple/20 mr-2 rounded-full cursor-pointer flex items-center px-4 py-1">
+              <div key={tag.id} onClick={() => handleUnselectTag(tag)} className="bg-purple/20 mr-2 mt-2 rounded-full cursor-pointer flex items-center px-4 py-1">
                 <p className=" text-sm text-purple mr-2  ">
                   {tag.label}
                 </p>
@@ -60,14 +60,14 @@ const TagPicker = ({ data,title, subTitle, className = "",onChange }: IProps) =>
             ))}
         </div>
         {/* Unpick tag */}
-        <div className="flex">
+        <div className="flex  flex-wrap">
           {selecteds
             .filter((tag) => !tag.selected)
             .map((tag) => (
               <p
                 key={tag.id}
                 onClick={() => handleSelectTag(tag)}
-                className="bg-gray/20 text-sm text-black px-4 py-1 mr-2 rounded-full cursor-pointer"
+                className="bg-gray/20 text-sm mt-2 text-black px-4 py-1 mr-2 rounded-full cursor-pointer"
               >
                 {tag.label}
               </p>
